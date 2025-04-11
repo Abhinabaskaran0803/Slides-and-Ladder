@@ -1,0 +1,108 @@
+import java.util.*;
+
+class Main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("enter the number of players: ");
+        int n = sc.nextInt();
+        
+        System.out.print("Enter the players name :");
+        String names[] = new String[n];
+        for(int i=0;i<n;i++){
+            names[i] = sc.next();
+        }
+        
+        System.out.print("Enter the name of the player who started the game: ");
+        String person = sc.next();
+        
+        System.out.print("Enter the number of gifts");
+        int giftsCount = sc.nextInt();
+        
+        System.out.print("Enter the position of the gifts located: ");
+        int giftPosition[] = new int[giftsCount];
+        for(int i=0;i<giftsCount;i++){
+            giftPosition[i] = sc.nextInt();
+        }
+        
+        int position[] = new int[n];
+        for(int i=0;i<n;i++){
+            position[i] = 1;
+        }
+        
+        System.out.print("Total number of times the dice is thrown: ");   //15
+        int diceThrown = sc.nextInt();
+        
+        int count[] = new int[n];
+        int ladders[] = new int[n];
+        int sliders[] = new int[n];
+        
+        int s = 0,j=0;
+        int i;
+        
+        for(i=0;i<diceThrown;i++){
+            s = sc.nextInt();
+            position[j] += s;
+
+            if(position[j] == 10){ 
+                position[j] = 23;
+                ladders[j]++;
+            }
+            if(position[j] == 13){ 
+                position[j] = 11;
+                sliders[j]++;
+            }
+            if(position[j] == 16){ 
+                position[j] = 8;
+                sliders[j]++;
+            }
+            if(position[j] == 17){ 
+                position[j] = 33;
+                ladders[j]++;
+            }
+            if(position[j] == 19){ 
+                position[j] = 31;
+                ladders[j]++;
+            }
+            if(position[j] == 35){ 
+                position[j] = 22;
+                sliders[j]++;
+            }
+
+            System.out.print(names[j] + " is in position of " + position[j] + "\n");
+
+            for(int k=0; k<giftsCount; k++){
+                if(position[j] == giftPosition[k]){
+                    count[j]++;
+                    break;
+                }
+            }
+
+            if(position[j] == 36){
+                break;
+            }
+
+            j++;
+            if(j == n) j = 0;
+        }
+
+        int reach[] = new int[n];
+        for(i=0;i<n;i++){
+            reach[i] = 36-position[i];
+        }
+        for(int k=0;k<n;k++){
+            System.out.println("\nPlayer name : " + names[k] + 
+                               "\ncurrent Position : " + position[k] +
+                               "\ncount to reach End : " + reach[k] +
+                               "\nnumber of ladders Used : " + ladders[k] +
+                               "\nnumber of sliders Used : " + sliders[k] +
+                               "\nnumber of gifts collected : " + count[k]);
+        }
+        
+        System.out.print("Players who lost the game are : ");
+        for(int i=0;i<n;i++){
+            if(position[k] != 36){
+                System.out.println(names[k]);
+            }
+        }
+    }
+}
